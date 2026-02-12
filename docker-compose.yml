@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # ─── PostgreSQL ─────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: autoflex-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: autoflex_inventory
+      POSTGRES_USER: autoflex
+      POSTGRES_PASSWORD: autoflex123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U autoflex -d autoflex_inventory"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Backend (Spring Boot) ──────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: autoflex-api
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/autoflex_inventory
+      SPRING_DATASOURCE_USERNAME: autoflex
+      SPRING_DATASOURCE_PASSWORD: autoflex123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ─── Frontend (React) ──────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: autoflex-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

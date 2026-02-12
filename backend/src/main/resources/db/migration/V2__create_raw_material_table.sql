@@ -1,0 +1,6 @@
+CREATE TABLE raw_material (
+    id BIGSERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    stock_quantity DECIMAL(15,4) NOT NULL DEFAULT 0
+);
