@@ -13,6 +13,32 @@ Uma aplicação web full-stack para Gestão de Estoque e Planejamento de Produç
 *   **Planejamento de Produção**: Um motor inteligente de "Sugestão de Produção" que utiliza uma **Estratégia Gulosa** para calcular o plano de produção ideal, maximizando o valor monetário com base no estoque disponível.
 *   **Interface Interativa**: Uma UI moderna baseada em React com gerenciamento de estado via Redux.
 
+---
+
+## 📸 Telas do Sistema
+
+### Gestão de Produtos
+![Tela de Produtos](produtos.png)
+*Listagem de produtos com opções de gerenciamento.*
+
+### Cadastro de Produtos
+![Adicionar](adicionarProduto.png)
+*Formulário para cadastro de novos produtos.*
+
+### Edição de Produtos
+![Editar](editarProduto.png)
+*Interface para atualização de dados dos produtos.*
+
+### Inventário de Matérias-Primas
+![Matérias-Primas](materiasPrimas.png)
+*Visualização e controle do estoque de insumos.*
+
+### Planejamento de Produção
+![Plano de Produção](planoProducao.png)
+*Sugestão automática de produção para maximização de lucro.*
+
+---
+
 ## 🛠️ Tecnologias Utilizadas
 
 ### Backend
